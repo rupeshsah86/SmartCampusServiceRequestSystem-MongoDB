@@ -259,7 +259,8 @@ const updateRequestStatus = asyncHandler(async (req, res) => {
       request._id,
       'resolution_pending',
       'Request Resolved - Please Confirm',
-      `Your request "${request.title}" has been resolved. Please review and confirm.`
+      `Your request "${request.title}" has been resolved. Please review and confirm.`,
+      req
     );
     // Send email to user
     const user = await ServiceRequest.findById(request._id).populate('userId', 'name email');
@@ -297,7 +298,8 @@ const updateRequestStatus = asyncHandler(async (req, res) => {
       request._id,
       'status_update',
       'Request Status Updated',
-      `Your request "${request.title}" status changed to ${status.replace('_', ' ')}.`
+      `Your request "${request.title}" status changed to ${status.replace('_', ' ')}.`,
+      req
     );
   }
 
@@ -383,7 +385,8 @@ const confirmResolution = asyncHandler(async (req, res) => {
         request._id,
         'resolution_accepted',
         'Resolution Accepted',
-        `User accepted your resolution for "${request.title}"`
+        `User accepted your resolution for "${request.title}"`,
+        req
       );
     }
     
@@ -419,7 +422,8 @@ const confirmResolution = asyncHandler(async (req, res) => {
         request._id,
         'resolution_rejected',
         'Resolution Rejected - Ticket Reopened',
-        `User rejected your resolution for "${request.title}". Please review.`
+        `User rejected your resolution for "${request.title}". Please review.`,
+        req
       );
       
       // Send email to technician

@@ -1,0 +1,5 @@
+<!-- Notification sound placeholder -->
+<!-- Place a notification.mp3 file in the public folder for sound alerts -->
+<!-- You can download free notification sounds from: -->
+<!-- - https://notificationsounds.com/ -->
+<!-- - https://freesound.org/ -->

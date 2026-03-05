@@ -5,12 +5,49 @@ const rateLimit = require('express-rate-limit');
 const compression = require('compression');
 const path = require('path');
 const fs = require('fs');
+const http = require('http');
+const socketIo = require('socket.io');
 const { sanitizeInput, mongoSanitize, createRateLimit } = require('./middleware/security');
 require('dotenv').config();
 
 const connectDB = require('./config/database');
 
 const app = express();
+const server = http.createServer(app);
+
+// Socket.io setup
+const io = socketIo(server, {
+  cors: {
+    origin: process.env.NODE_ENV === 'production' ? 'your-frontend-domain.com' : ['http://localhost:3000', 'http://127.0.0.1:3000'],
+    credentials: true
+  }
+});
+
+// Store connected users
+const connectedUsers = new Map();
+
+io.on('connection', (socket) => {
+  console.log('New client connected:', socket.id);
+
+  socket.on('register', (userId) => {
+    connectedUsers.set(userId, socket.id);
+    console.log(`User ${userId} registered with socket ${socket.id}`);
+  });
+
+  socket.on('disconnect', () => {
+    for (const [userId, socketId] of connectedUsers.entries()) {
+      if (socketId === socket.id) {
+        connectedUsers.delete(userId);
+        console.log(`User ${userId} disconnected`);
+        break;
+      }
+    }
+  });
+});
+
+// Make io accessible to routes
+app.set('io', io);
+app.set('connectedUsers', connectedUsers);
 
 // Create uploads directory if it doesn't exist
 const uploadsDir = path.join(__dirname, 'uploads');
@@ -86,6 +123,6 @@ app.use(errorHandler);
 
 const PORT = process.env.PORT || 8000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`);
 });

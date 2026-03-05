@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useSocket } from '../context/SocketContext';
 import { formatDate, handleApiError } from '../utils/helpers';
 import '../styles/dashboard.css';
 
 const Notifications = () => {
   const { user } = useAuth();
+  const { socket } = useSocket();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -13,6 +15,42 @@ const Notifications = () => {
 
   useEffect(() => {
     fetchNotifications();
+  }, []);
+
+  // Listen for real-time notifications
+  useEffect(() => {
+    if (socket) {
+      socket.on('notification', (notification) => {
+        console.log('Received real-time notification:', notification);
+        
+        // Add to notifications list
+        setNotifications(prev => [notification, ...prev]);
+        setUnreadCount(prev => prev + 1);
+        
+        // Show browser notification
+        if ('Notification' in window && Notification.permission === 'granted') {
+          new Notification(notification.title, {
+            body: notification.message,
+            icon: '/logo192.png'
+          });
+        }
+        
+        // Play sound
+        const audio = new Audio('/notification.mp3');
+        audio.play().catch(e => console.log('Audio play failed:', e));
+      });
+
+      return () => {
+        socket.off('notification');
+      };
+    }
+  }, [socket]);
+
+  // Request notification permission
+  useEffect(() => {
+    if ('Notification' in window && Notification.permission === 'default') {
+      Notification.requestPermission();
+    }
   }, []);
 
   const fetchNotifications = async () => {

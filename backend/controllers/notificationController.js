@@ -1,16 +1,30 @@
 const Notification = require('../models/Notification');
 const { sendResponse, asyncHandler } = require('../utils/helpers');
+const { emitNotification } = require('../utils/socketHelper');
 
 // Create notification (internal function)
-const createNotification = async (userId, requestId, type, title, message) => {
+const createNotification = async (userId, requestId, type, title, message, req = null) => {
   try {
-    await Notification.create({
+    const notification = await Notification.create({
       userId,
       requestId,
       type,
       title,
       message
     });
+    
+    // Emit real-time notification if req is provided
+    if (req) {
+      emitNotification(req, userId, {
+        _id: notification._id,
+        type,
+        title,
+        message,
+        createdAt: notification.createdAt
+      });
+    }
+    
+    return notification;
   } catch (error) {
     console.error('Error creating notification:', error);
   }
