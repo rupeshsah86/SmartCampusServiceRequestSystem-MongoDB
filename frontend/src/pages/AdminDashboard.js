@@ -3,8 +3,9 @@ import { useAuth } from '../context/AuthContext';
 import { adminAPI, requestAPI } from '../services/api';
 import { formatDate, formatStatus, formatPriority, getStatusColor, getPriorityColor, handleApiError, formatResolutionTime } from '../utils/helpers';
 import { exportAdminReportToPDF, exportTechnicianPerformanceToPDF } from '../utils/pdfExport';
-import AdvancedAnalytics from '../components/AdvancedAnalytics';
+import EnhancedAnalytics from '../components/EnhancedAnalytics';
 import '../styles/admin.css';
+import '../styles/enhanced-analytics.css';
 
 const AdminDashboard = () => {
   const { user, logout } = useAuth();
@@ -212,7 +213,7 @@ const AdminDashboard = () => {
             </div>
           </div>
 
-          <AdvancedAnalytics stats={stats} />
+          <EnhancedAnalytics stats={stats} />
         </>
       ) : null}
     </div>

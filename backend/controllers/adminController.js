@@ -27,6 +27,18 @@ const getDashboardStats = asyncHandler(async (req, res) => {
     }
   ]);
 
+  // Convert to object for easy access
+  const statusMap = {};
+  statusStats.forEach(stat => {
+    statusMap[stat._id] = stat.count;
+  });
+
+  const pendingRequests = statusMap.pending || 0;
+  const inProgressRequests = statusMap.in_progress || 0;
+  const resolvedRequests = statusMap.resolved || 0;
+  const closedRequests = statusMap.closed || 0;
+  const reopenedRequests = statusMap.reopened || 0;
+
   // Requests by category
   const categoryStats = await ServiceRequest.aggregate([
     {
@@ -36,6 +48,12 @@ const getDashboardStats = asyncHandler(async (req, res) => {
       }
     }
   ]);
+
+  // Convert to object
+  const categoryBreakdown = {};
+  categoryStats.forEach(stat => {
+    categoryBreakdown[stat._id] = stat.count;
+  });
 
   // Priority distribution
   const priorityStats = await ServiceRequest.aggregate([
@@ -47,11 +65,17 @@ const getDashboardStats = asyncHandler(async (req, res) => {
     }
   ]);
 
-  // Recent requests trend (last 7 days)
+  // Convert to object
+  const priorityBreakdown = {};
+  priorityStats.forEach(stat => {
+    priorityBreakdown[stat._id] = stat.count;
+  });
+
+  // Recent requests trend (last 30 days with daily breakdown)
   const trendStats = await ServiceRequest.aggregate([
     {
       $match: {
-        createdAt: { $gte: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000) }
+        createdAt: { $gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000) }
       }
     },
     {
@@ -59,7 +83,13 @@ const getDashboardStats = asyncHandler(async (req, res) => {
         _id: {
           $dateToString: { format: '%Y-%m-%d', date: '$createdAt' }
         },
-        count: { $sum: 1 }
+        count: { $sum: 1 },
+        resolved: {
+          $sum: { $cond: [{ $eq: ['$status', 'resolved'] }, 1, 0] }
+        },
+        pending: {
+          $sum: { $cond: [{ $eq: ['$status', 'pending'] }, 1, 0] }
+        }
       }
     },
     { $sort: { _id: 1 } }
@@ -91,20 +121,33 @@ const getDashboardStats = asyncHandler(async (req, res) => {
     }
   ]);
 
-  // Total users count
+  // Total users count by role
   const totalUsers = await User.countDocuments({ isActive: true });
+  const totalTechnicians = await User.countDocuments({ role: 'technician', isActive: true });
   const totalRequests = await ServiceRequest.countDocuments();
 
   const dashboardData = {
     overview: {
       totalRequests,
+      pendingRequests,
+      inProgressRequests,
+      resolvedRequests,
+      closedRequests,
+      reopenedRequests,
       totalUsers,
+      totalTechnicians,
       avgResolutionTime: resolutionTime[0]?.avgResolutionTime || 0
     },
-    statusDistribution: statusStats,
-    categoryDistribution: categoryStats,
-    priorityDistribution: priorityStats,
-    requestsTrend: trendStats
+    categoryBreakdown,
+    priorityBreakdown,
+    trends: {
+      daily: trendStats.map(stat => ({
+        date: stat._id,
+        count: stat.count,
+        resolved: stat.resolved,
+        pending: stat.pending
+      }))
+    }
   };
 
   // Cache the results

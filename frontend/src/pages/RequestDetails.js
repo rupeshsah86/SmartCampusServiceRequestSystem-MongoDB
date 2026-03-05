@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { requestAPI, feedbackAPI } from '../services/api';
 import { formatDate, formatStatus, formatPriority, getStatusColor, getPriorityColor, handleApiError, formatResolutionTime } from '../utils/helpers';
 import { exportRequestToPDF } from '../utils/pdfExport';
+import QRCodeGenerator from '../components/QRCodeGenerator';
 import Toast from '../components/Toast';
 import '../styles/forms.css';
 
@@ -607,6 +608,8 @@ const RequestDetails = () => {
             <Link to="/dashboard" className="btn btn-secondary">
               Back to Dashboard
             </Link>
+            
+            <QRCodeGenerator requestId={request._id} requestData={request} />
             
             <button
               className="btn btn-primary"
