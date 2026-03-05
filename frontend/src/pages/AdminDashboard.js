@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { adminAPI, requestAPI } from '../services/api';
 import { formatDate, formatStatus, formatPriority, getStatusColor, getPriorityColor, handleApiError, formatResolutionTime } from '../utils/helpers';
+import { exportAdminReportToPDF, exportTechnicianPerformanceToPDF } from '../utils/pdfExport';
 import AdvancedAnalytics from '../components/AdvancedAnalytics';
 import '../styles/admin.css';
 
@@ -175,6 +176,16 @@ const AdminDashboard = () => {
         </div>
       ) : stats ? (
         <>
+          <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+            <button
+              className="btn btn-primary"
+              onClick={() => exportAdminReportToPDF(stats.overview, requests)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              📄 Export Report PDF
+            </button>
+          </div>
+          
           <div className="analytics-grid">
             <div className="analytics-card requests">
               <div className="analytics-header">
@@ -466,6 +477,22 @@ const AdminDashboard = () => {
       <div className="requests-table">
         <div className="table-header">
           <h3 className="table-title">🏆 Technician Performance Metrics</h3>
+          {techPerformance && techPerformance.length > 0 && (
+            <button
+              className="btn btn-primary btn-sm"
+              onClick={() => exportTechnicianPerformanceToPDF(techPerformance.map(p => ({
+                name: p.technician.name,
+                email: p.technician.email,
+                totalResolved: p.stats.totalResolved,
+                reopenedCount: p.stats.reopenedCount,
+                avgResolutionTime: formatResolutionTime(p.stats.avgResolutionTime),
+                successRate: parseFloat(p.stats.successRate)
+              })))}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              📄 Export PDF
+            </button>
+          )}
         </div>
         
         {loading ? (

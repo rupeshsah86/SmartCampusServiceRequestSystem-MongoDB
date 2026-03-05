@@ -102,6 +102,9 @@ const StudentDashboard = () => {
                 <p className="user-name">{user?.name}</p>
                 <p className="user-role">{user?.department} • {user?.role}</p>
               </div>
+              <Link to="/profile" className="profile-link">
+                👤 Profile
+              </Link>
               <button className="logout-btn" onClick={handleLogout}>
                 Logout
               </button>

@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { requestAPI, feedbackAPI } from '../services/api';
 import { formatDate, formatStatus, formatPriority, getStatusColor, getPriorityColor, handleApiError, formatResolutionTime } from '../utils/helpers';
+import { exportRequestToPDF } from '../utils/pdfExport';
 import Toast from '../components/Toast';
 import '../styles/forms.css';
 
@@ -606,6 +607,14 @@ const RequestDetails = () => {
             <Link to="/dashboard" className="btn btn-secondary">
               Back to Dashboard
             </Link>
+            
+            <button
+              className="btn btn-primary"
+              onClick={() => exportRequestToPDF(request)}
+              style={{ display: 'flex', alignItems: 'center', gap: '8px' }}
+            >
+              📄 Export PDF
+            </button>
             
             {request.status === 'pending' && user?.role !== 'admin' && (
               <button

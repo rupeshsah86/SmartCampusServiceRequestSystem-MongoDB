@@ -11,6 +11,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import CreateRequest from './pages/CreateRequest';
 import RequestDetails from './pages/RequestDetails';
 import Feedback from './pages/Feedback';
+import Profile from './pages/Profile';
 import LandingPage from './pages/LandingPage';
 import Loading from './components/Loading';
 import Notifications from './components/Notifications';
@@ -110,6 +111,14 @@ function AppRoutes() {
           element={
             <ProtectedRoute>
               <Notifications />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute>
+              <Profile />
             </ProtectedRoute>
           }
         />

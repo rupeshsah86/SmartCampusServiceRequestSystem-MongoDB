@@ -89,4 +89,62 @@ const getProfile = asyncHandler(async (req, res) => {
   });
 });
 
-module.exports = { register, login, getProfile };
+// Update user profile
+const updateProfile = asyncHandler(async (req, res) => {
+  const { name, email, phone, department } = req.body;
+  
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return sendResponse(res, 404, false, 'User not found');
+  }
+  
+  // Check if email is being changed and if it's already taken
+  if (email !== user.email) {
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return sendResponse(res, 400, false, 'Email already in use');
+    }
+  }
+  
+  user.name = name || user.name;
+  user.email = email || user.email;
+  user.phone = phone || user.phone;
+  user.department = department || user.department;
+  
+  await user.save();
+  
+  sendResponse(res, 200, true, 'Profile updated successfully', {
+    user: {
+      id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      department: user.department,
+      phone: user.phone
+    }
+  });
+});
+
+// Change password
+const changePassword = asyncHandler(async (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  
+  const user = await User.findById(req.user._id);
+  if (!user) {
+    return sendResponse(res, 404, false, 'User not found');
+  }
+  
+  // Verify current password
+  const isPasswordValid = await user.comparePassword(currentPassword);
+  if (!isPasswordValid) {
+    return sendResponse(res, 401, false, 'Current password is incorrect');
+  }
+  
+  // Update password
+  user.password = newPassword;
+  await user.save();
+  
+  sendResponse(res, 200, true, 'Password changed successfully');
+});
+
+module.exports = { register, login, getProfile, updateProfile, changePassword };
