@@ -191,7 +191,7 @@ const AdminDashboard = () => {
             <div className="analytics-card requests">
               <div className="analytics-header">
                 <h3 className="analytics-title">Total Requests</h3>
-                <div className="analytics-icon" style={{ backgroundColor: '#007bff' }}>📋</div>
+                <div className="analytics-icon" style={{ backgroundColor: '#6366f1' }}>📋</div>
               </div>
               <div className="analytics-value">{stats.overview.totalRequests}</div>
             </div>
@@ -199,7 +199,7 @@ const AdminDashboard = () => {
             <div className="analytics-card users">
               <div className="analytics-header">
                 <h3 className="analytics-title">Active Users</h3>
-                <div className="analytics-icon" style={{ backgroundColor: '#28a745' }}>👥</div>
+                <div className="analytics-icon" style={{ backgroundColor: '#10b981' }}>👥</div>
               </div>
               <div className="analytics-value">{stats.overview.totalUsers}</div>
             </div>
@@ -207,7 +207,7 @@ const AdminDashboard = () => {
             <div className="analytics-card resolution">
               <div className="analytics-header">
                 <h3 className="analytics-title">Avg Resolution Time</h3>
-                <div className="analytics-icon" style={{ backgroundColor: '#ffc107' }}>⏱️</div>
+                <div className="analytics-icon" style={{ backgroundColor: '#f59e0b' }}>⏱️</div>
               </div>
               <div className="analytics-value">{stats.overview.avgResolutionTime.toFixed(1)} days</div>
             </div>
@@ -465,7 +465,7 @@ const AdminDashboard = () => {
                     <div className="empty-state-text">There are no users to display</div>
                   </td>
                 </tr>
-              )}}
+              )}
             </tbody>
           </table>
         )}
@@ -518,7 +518,7 @@ const AdminDashboard = () => {
               {techPerformance && techPerformance.length > 0 ? (
                 techPerformance.map((perf, idx) => {
                   const successRate = parseFloat(perf.stats.successRate);
-                  const performanceColor = successRate >= 90 ? '#28a745' : successRate >= 75 ? '#ffc107' : '#dc3545';
+                  const performanceColor = successRate >= 90 ? '#10b981' : successRate >= 75 ? '#f59e0b' : '#ef4444';
                   return (
                     <tr key={idx}>
                       <td>
@@ -529,17 +529,17 @@ const AdminDashboard = () => {
                       </td>
                       <td>{perf.technician.department}</td>
                       <td>
-                        <span className="badge" style={{ backgroundColor: '#007bff', color: 'white' }}>
+                        <span className="badge" style={{ backgroundColor: '#6366f1', color: 'white' }}>
                           {perf.stats.totalResolved}
                         </span>
                       </td>
                       <td>
-                        <span className="badge" style={{ backgroundColor: perf.stats.reopenedCount > 0 ? '#dc3545' : '#6c757d', color: 'white' }}>
+                        <span className="badge" style={{ backgroundColor: perf.stats.reopenedCount > 0 ? '#ef4444' : '#94a3b8', color: 'white' }}>
                           {perf.stats.reopenedCount}
                         </span>
                       </td>
                       <td>
-                        <span className="badge" style={{ backgroundColor: '#17a2b8', color: 'white' }}>
+                        <span className="badge" style={{ backgroundColor: '#8b5cf6', color: 'white' }}>
                           {formatResolutionTime(perf.stats.avgResolutionTime)}
                         </span>
                       </td>
@@ -553,7 +553,7 @@ const AdminDashboard = () => {
                           <div style={{ 
                             width: '100px', 
                             height: '8px', 
-                            backgroundColor: '#e9ecef', 
+                            backgroundColor: '#e2e8f0', 
                             borderRadius: '4px',
                             overflow: 'hidden'
                           }}>

@@ -90,8 +90,8 @@
 }
 
 .analytics-card.requests {
-  border-left-color: #3b82f6;
-  background: linear-gradient(135deg, #ffffff 0%, #eff6ff 100%);
+  border-left-color: #6366f1;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f3ff 100%);
 }
 
 .analytics-card.users {
@@ -153,7 +153,7 @@
 }
 
 .analytics-change.negative {
-  color: #dc3545;
+  color: #ef4444;
 }
 
 .chart-container {
@@ -234,9 +234,16 @@
 
 .filter-input {
   padding: 10px 12px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+  border: 2px solid #e2e8f0;
+  border-radius: 8px;
   font-size: 14px;
+  transition: border-color 0.2s ease;
+}
+
+.filter-input:focus {
+  outline: none;
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .filter-actions {
@@ -249,9 +256,9 @@
   background: white;
   border-radius: 12px;
   padding: 20px 25px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.08);
   margin-bottom: 30px;
-  border-left: 4px solid #ffc107;
+  border-left: 4px solid #6366f1;
 }
 
 .bulk-header {
@@ -269,8 +276,8 @@
 }
 
 .selected-count {
-  background-color: #ffc107;
-  color: #212529;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: white;
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 14px;
@@ -358,8 +365,8 @@
 .request-id {
   font-family: 'Monaco', 'Courier New', monospace;
   font-weight: 600;
-  color: #3b82f6;
-  background-color: #eff6ff;
+  color: #6366f1;
+  background-color: #f5f3ff;
   padding: 4px 8px;
   border-radius: 4px;
   font-size: 12px;
@@ -461,9 +468,9 @@
 }
 
 .pagination-btn.active {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
   color: white;
-  border-color: #007bff;
+  border-color: #6366f1;
 }
 
 .pagination-btn:disabled {
@@ -482,18 +489,18 @@
     flex-direction: column;
     gap: 15px;
   }
-  
+
   .tab-nav {
     flex-direction: column;
   }
-  
+
   .tab-button {
     border-bottom: none;
     border-right: 3px solid transparent;
   }
-  
+
   .tab-button.active {
-    border-right-color: #dc3545;
+    border-right-color: #6366f1;
     border-bottom: none;
   }
   
@@ -630,8 +637,8 @@
 
 .form-control:focus {
   outline: none;
-  border-color: #007bff;
-  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .btn {
@@ -648,21 +655,25 @@
 }
 
 .btn-primary {
-  background-color: #007bff;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
   color: white;
+  box-shadow: 0 2px 8px rgba(99, 102, 241, 0.3);
 }
 
 .btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
+  background: linear-gradient(135deg, #4f46e5, #4338ca);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
 }
 
 .btn-secondary {
-  background-color: #6c757d;
-  color: white;
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 2px solid #e2e8f0;
 }
 
 .btn-secondary:hover:not(:disabled) {
-  background-color: #545b62;
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
 }
 
 .btn:disabled {
@@ -732,7 +743,7 @@
 }
 
 .badge-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   color: white;
 }
 

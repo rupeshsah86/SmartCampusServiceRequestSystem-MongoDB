@@ -177,7 +177,7 @@ const getFilteredRequests = asyncHandler(async (req, res) => {
   if (status) filter.status = status;
   if (category) filter.category = category;
   if (priority) filter.priority = priority;
-  if (assignedTo) filter.assignedTo = { $regex: assignedTo, $options: 'i' };
+  if (assignedTo) filter.assignedTo = assignedTo;
 
   // Date range filter
   if (dateFrom || dateTo) {

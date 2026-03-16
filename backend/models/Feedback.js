@@ -46,7 +46,7 @@ const feedbackSchema = new mongoose.Schema({
 });
 
 // Index for better query performance
-feedbackSchema.index({ requestId: 1 });
+// Note: requestId index is created automatically via unique:true above
 feedbackSchema.index({ userId: 1 });
 
 module.exports = mongoose.model('Feedback', feedbackSchema);

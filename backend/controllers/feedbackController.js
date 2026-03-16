@@ -20,8 +20,8 @@ const submitFeedback = asyncHandler(async (req, res) => {
     return sendResponse(res, 404, false, 'Service request not found');
   }
 
-  if (request.status !== 'resolved') {
-    return sendResponse(res, 400, false, 'Feedback can only be submitted for resolved requests');
+  if (request.status !== 'resolved' && request.status !== 'closed') {
+    return sendResponse(res, 400, false, 'Feedback can only be submitted for resolved or closed requests');
   }
 
   // Check if user owns the request

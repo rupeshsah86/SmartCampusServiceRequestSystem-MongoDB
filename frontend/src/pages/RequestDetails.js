@@ -328,11 +328,11 @@ const RequestDetails = () => {
               <div className="form-group">
                 <label className="form-label">Assigned To</label>
                 <div className="form-control" style={{ 
-                  backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+                  backgroundColor: 'rgba(99, 102, 241, 0.1)', 
                   color: 'var(--color-primary-700)', 
-                  border: '1px solid rgba(59, 130, 246, 0.2)' 
+                  border: '1px solid rgba(99, 102, 241, 0.2)' 
                 }}>
-                  👤 {request.assignedTo}
+                  👤 {request.assignedTo?.name || String(request.assignedTo)}{request.assignedTo?.email ? ` (${request.assignedTo.email})` : ''}
                 </div>
               </div>
             )}

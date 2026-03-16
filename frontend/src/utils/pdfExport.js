@@ -35,9 +35,9 @@ export const exportRequestToPDF = (request) => {
     ['Priority', request.priority?.toUpperCase()],
     ['Status', request.status?.replace('_', ' ').toUpperCase()],
     ['Location', request.location],
-    ['Created By', request.createdBy?.name],
-    ['Email', request.createdBy?.email],
-    ['Department', request.createdBy?.department],
+    ['Created By', request.userId?.name],
+    ['Email', request.userId?.email],
+    ['Department', request.userId?.department],
     ['Created At', new Date(request.createdAt).toLocaleString()],
     ['Assigned To', request.assignedTo?.name || 'Not Assigned'],
   ];

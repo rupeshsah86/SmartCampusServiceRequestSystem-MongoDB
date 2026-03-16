@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #60a5fa 100%);
+  background: linear-gradient(135deg, #312e81 0%, #4f46e5 50%, #818cf8 100%);
   padding: 20px;
 }
 
@@ -86,8 +86,8 @@
 
 .auth-form .form-control:focus {
   outline: none;
-  border-color: #3b82f6;
-  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+  border-color: #6366f1;
+  box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.12);
   background-color: #ffffff;
 }
 
@@ -117,19 +117,19 @@
   font-size: 16px;
   font-weight: 600;
   border-radius: 10px;
-  background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+  background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
   border: none;
   color: white;
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 10px;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.35);
 }
 
 .auth-form .btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-  background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+  box-shadow: 0 8px 20px rgba(99, 102, 241, 0.45);
+  background: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
 }
 
 .auth-form .btn:active:not(:disabled) {
@@ -172,7 +172,7 @@
 }
 
 .auth-footer a {
-  color: #3b82f6;
+  color: #6366f1;
   text-decoration: none;
   font-weight: 600;
   font-size: 15px;
@@ -180,7 +180,7 @@
 }
 
 .auth-footer a:hover {
-  color: #2563eb;
+  color: #4f46e5;
   text-decoration: underline;
 }
 
@@ -205,17 +205,17 @@
 }
 
 .role-option:hover {
-  border-color: #3b82f6;
-  background-color: #f0f9ff;
+  border-color: #6366f1;
+  background-color: #f5f3ff;
   transform: translateY(-2px);
 }
 
 .role-option.active {
-  border-color: #3b82f6;
-  background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
-  color: #1e40af;
+  border-color: #6366f1;
+  background: linear-gradient(135deg, #f5f3ff 0%, #ede9fe 100%);
+  color: #4338ca;
   font-weight: 600;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
 }
 
 .role-option input {

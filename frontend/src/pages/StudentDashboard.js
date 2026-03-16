@@ -347,7 +347,7 @@ const StudentDashboard = () => {
                       
                       {request.assignedTo && (
                         <div className="text-sm text-muted">
-                          Assigned to: {request.assignedTo}
+                          Assigned to: {request.assignedTo?.name || String(request.assignedTo)}
                         </div>
                       )}
                     </div>

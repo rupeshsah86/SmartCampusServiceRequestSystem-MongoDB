@@ -75,24 +75,18 @@ export const generateCSRFToken = () => {
 // Rate limiting for client-side
 export const clientRateLimit = {
   attempts: new Map(),
-  
-  isAllowed: (key, maxAttempts = 5, windowMs = 15 * 60 * 1000) => {
+
+  isAllowed(key, maxAttempts = 5, windowMs = 15 * 60 * 1000) {
     const now = Date.now();
-    const attempts = this.attempts.get(key) || [];
-    
-    // Remove old attempts
+    const attempts = clientRateLimit.attempts.get(key) || [];
     const validAttempts = attempts.filter(time => now - time < windowMs);
-    
-    if (validAttempts.length >= maxAttempts) {
-      return false;
-    }
-    
+    if (validAttempts.length >= maxAttempts) return false;
     validAttempts.push(now);
-    this.attempts.set(key, validAttempts);
+    clientRateLimit.attempts.set(key, validAttempts);
     return true;
   },
-  
-  reset: (key) => {
-    this.attempts.delete(key);
+
+  reset(key) {
+    clientRateLimit.attempts.delete(key);
   }
 };

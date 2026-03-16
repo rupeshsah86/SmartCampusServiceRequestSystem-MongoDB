@@ -32,7 +32,7 @@ const updateStatusValidation = [
     .withMessage('Invalid request ID'),
   
   body('status')
-    .isIn(['pending', 'in_progress', 'resolved', 'closed'])
+    .isIn(['pending', 'in_progress', 'resolved', 'closed', 'reopened'])
     .withMessage('Invalid status'),
   
   body('adminRemarks')

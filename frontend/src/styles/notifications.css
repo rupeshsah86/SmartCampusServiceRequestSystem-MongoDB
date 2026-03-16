@@ -15,7 +15,7 @@
 
 .notifications-header h2 {
   margin: 0;
-  color: #333;
+  color: #1e293b;
   font-size: 24px;
   font-weight: 600;
 }
@@ -44,8 +44,8 @@
 }
 
 .notification-item.unread {
-  background-color: #f8f9ff;
-  border-left: 4px solid #007bff;
+  background-color: #f5f3ff;
+  border-left: 4px solid #6366f1;
 }
 
 .notification-icon {
@@ -69,29 +69,30 @@
   margin: 0;
   font-size: 16px;
   font-weight: 600;
-  color: #333;
+  color: #1e293b;
 }
 
 .notification-time {
   font-size: 12px;
-  color: #666;
+  color: #64748b;
   white-space: nowrap;
 }
 
 .notification-message {
-  color: #666;
+  color: #475569;
   margin: 0 0 10px 0;
   line-height: 1.5;
 }
 
 .notification-link {
-  color: #007bff;
+  color: #6366f1;
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
 }
 
 .notification-link:hover {
+  color: #4f46e5;
   text-decoration: underline;
 }
 

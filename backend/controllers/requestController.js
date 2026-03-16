@@ -167,7 +167,19 @@ const getRequestById = asyncHandler(async (req, res) => {
   }
 
   // Check if user can access this request
-  if (req.user.role !== 'admin' && request.userId._id.toString() !== req.user._id.toString()) {
+  if (
+    req.user.role !== 'admin' &&
+    req.user.role !== 'technician' &&
+    request.userId._id.toString() !== req.user._id.toString()
+  ) {
+    return sendResponse(res, 403, false, 'Access denied');
+  }
+
+  // Technicians can only see their assigned requests
+  if (
+    req.user.role === 'technician' &&
+    (!request.assignedTo || request.assignedTo._id.toString() !== req.user._id.toString())
+  ) {
     return sendResponse(res, 403, false, 'Access denied');
   }
 
@@ -262,37 +274,36 @@ const updateRequestStatus = asyncHandler(async (req, res) => {
       `Your request "${request.title}" has been resolved. Please review and confirm.`,
       req
     );
-    // Send email to user
-    const user = await ServiceRequest.findById(request._id).populate('userId', 'name email');
+    await request.populate('userId', 'name email');
     await sendEmail(
-      user.userId.email,
+      request.userId.email,
       '✅ Request Resolved - Action Required',
-      emailTemplates.requestResolved(user.userId, request)
+      emailTemplates.requestResolved(request.userId, request)
     );
   }
   if (status === 'closed') request.closedAt = new Date();
-  
+
   // Handle reopened status
   if (status === 'reopened') {
     request.reopenedCount += 1;
     request.resolvedAt = null;
   }
 
-  // Handle assignment
+  // Handle assignment email
   if (assignedTo && req.user.role === 'admin') {
-    const user = await ServiceRequest.findById(request._id).populate('userId', 'name email');
+    await request.populate('userId', 'name email');
     const technician = await require('../models/User').findById(assignedTo);
-    if (user && technician) {
+    if (technician) {
       await sendEmail(
-        user.userId.email,
+        request.userId.email,
         '👤 Technician Assigned to Your Request',
-        emailTemplates.requestAssigned(user.userId, request, technician)
+        emailTemplates.requestAssigned(request.userId, request, technician)
       );
     }
   }
 
-  // Create notification for status update
-  if (request.status !== status) {
+  // Notify user of general status update (excluding resolved which already notifies above)
+  if (oldStatus !== status && status !== 'resolved') {
     await createNotification(
       request.userId,
       request._id,
