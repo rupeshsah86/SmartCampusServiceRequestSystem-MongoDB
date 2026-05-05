@@ -324,4 +324,4 @@ Open browser: `http://localhost:3000`
 
 ---
 
-**Good luck! You've built something impressive. Own it! 🚀**
+**Good luck! You've built something impressive. Own it! 🚀

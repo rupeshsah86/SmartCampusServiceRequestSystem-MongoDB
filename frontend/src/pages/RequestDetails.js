@@ -28,9 +28,10 @@ const RequestDetails = () => {
   useEffect(() => {
     if (request && request.status !== 'closed' && request.status !== 'resolved') {
       calculateSLA();
-      const interval = setInterval(calculateSLA, 60000); // Update every minute
+      const interval = setInterval(calculateSLA, 60000);
       return () => clearInterval(interval);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [request]);
 
   const calculateSLA = () => {

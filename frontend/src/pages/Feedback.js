@@ -7,7 +7,6 @@ import '../styles/forms.css';
 
 const Feedback = () => {
   const { id } = useParams();
-  const { user } = useAuth();
   const navigate = useNavigate();
   const [request, setRequest] = useState(null);
   const [formData, setFormData] = useState({

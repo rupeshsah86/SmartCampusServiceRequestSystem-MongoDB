@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { requestAPI } from '../services/api';
 import { handleApiError } from '../utils/helpers';
 import '../styles/forms.css';

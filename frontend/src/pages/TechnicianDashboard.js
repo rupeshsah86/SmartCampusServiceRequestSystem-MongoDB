@@ -33,6 +33,7 @@ const TechnicianDashboard = () => {
 
   useEffect(() => {
     fetchAssignedRequests();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [filter, priorityFilter, searchTerm, sortBy]);
 
   const fetchAssignedRequests = useCallback(async () => {
