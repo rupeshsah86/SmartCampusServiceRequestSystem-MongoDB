@@ -82,7 +82,7 @@ app.use(compression());
 
 // Rate limiting
 const generalLimiter = createRateLimit(15 * 60 * 1000, 100, 'Too many requests, please try again later');
-const authLimiter = createRateLimit(15 * 60 * 1000, 5, 'Too many authentication attempts, please try again later');
+const authLimiter = createRateLimit(15 * 60 * 1000, 50, 'Too many authentication attempts, please try again later');
 
 app.use(generalLimiter);
 app.use('/api/auth/login', authLimiter);
