@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { useSocket } from '../context/SocketContext';
 import { formatDate, handleApiError } from '../utils/helpers';
 import '../styles/dashboard.css';
 
 const Notifications = () => {
-  const { user } = useAuth();
   const { socket } = useSocket();
   const [notifications, setNotifications] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import { LineChart, Line, BarChart, Bar, PieChart, Pie, AreaChart, Area, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { format, subDays, startOfDay } from 'date-fns';
+import React, { useState } from 'react';
+import { BarChart, Bar, PieChart, Pie, AreaChart, Area, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import { format } from 'date-fns';
 import '../styles/analytics.css';
 
 const EnhancedAnalytics = ({ stats }) => {
-  const [timeRange, setTimeRange] = useState('30'); // days
-  const [selectedMetric, setSelectedMetric] = useState('requests');
+  const [timeRange, setTimeRange] = useState('30');
 
   const COLORS = ['#6366f1', '#8b5cf6', '#d946ef', '#f59e0b', '#10b981', '#3b82f6'];
 
@@ -60,17 +59,6 @@ const EnhancedAnalytics = ({ stats }) => {
       name: key.toUpperCase(),
       value: value
     }));
-  };
-
-  // Response time data
-  const getResponseTimeData = () => {
-    if (!stats?.responseTime) return [];
-    
-    return [
-      { name: 'Avg Response', hours: stats.responseTime.average || 0 },
-      { name: 'Fastest', hours: stats.responseTime.fastest || 0 },
-      { name: 'Slowest', hours: stats.responseTime.slowest || 0 }
-    ];
   };
 
   // Calculate insights

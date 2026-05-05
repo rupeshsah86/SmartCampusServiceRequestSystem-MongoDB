@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import { requestAPI } from '../services/api';
 import { handleApiError } from '../utils/helpers';
 import '../styles/forms.css';
